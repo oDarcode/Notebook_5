@@ -13,25 +13,21 @@ import ru.dariamikhailukova.notebook_5.databinding.FragmentListBinding
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 
 
-class ListFragment : Fragment(), ListView {
-
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
-
+class ListFragment : Fragment() {
+    private lateinit var binding: FragmentListBinding
     private lateinit var mListViewModel: ListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListBinding.inflate(inflater, container, false)
+        binding = FragmentListBinding.inflate(inflater, container, false)
         mListViewModel = ViewModelProvider(this).get(ListViewModel::class.java)
         setHasOptionsMenu(true)
 
         val adapter = ListAdapter()
-        val recyclerView = binding.recyclerView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         mListViewModel.readAllData.observe(viewLifecycleOwner, { note ->
             adapter.setData(note)
@@ -55,34 +51,20 @@ class ListFragment : Fragment(), ListView {
             deleteAllNotes()
         }
 
-        if(item.itemId == R.id.menu_about){
-            Toast.makeText(requireContext(), "ALL OF YOU IS GODS", Toast.LENGTH_SHORT).show()
-            //val intent = Intent(activity, AboutActivity::class.java)
-            //startActivity(intent)
-        }
         return super.onOptionsItemSelected(item)
     }
 
     //удаление всех элеметов бд
-    override fun deleteAllNotes() {
+    private fun deleteAllNotes() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes"){_,_->
-            //presenter?.deleteAll()
+            mListViewModel.deleteAllNotes()
+            Toast.makeText(requireContext(), R.string.remove_all, Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("No"){_,_->}
         builder.setTitle("Delete everything?")
         builder.setMessage("Are you sure?")
         builder.create().show()
-    }
-
-    //вывод Toast
-    override fun showToast(text: Int) {
-        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

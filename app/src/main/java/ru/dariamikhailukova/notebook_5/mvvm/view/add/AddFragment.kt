@@ -18,7 +18,7 @@ import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 import java.util.*
 
-
+//
 class AddFragment : Fragment(){
     private lateinit var binding: FragmentAddBinding
     private lateinit var mAddViewModel: AddViewModel
@@ -33,18 +33,6 @@ class AddFragment : Fragment(){
 
         binding.addViewModel = mAddViewModel
         binding.lifecycleOwner = this
-
-
-        /*binding.textNote.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-                //mAddViewModel.setText(char.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-
-        })*/
 
         return binding.root
     }

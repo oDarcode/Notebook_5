@@ -1,17 +1,18 @@
 package ru.dariamikhailukova.notebook_5.mvvm.view.list
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
+import ru.dariamikhailukova.notebook_5.mvvm.view.viewPager.NUMBER
+import ru.dariamikhailukova.notebook_5.mvvm.view.viewPager.ViewPager
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
-
     private var noteList = emptyList<Note>()
 
     //указаить используемые компоненты из макета для отдельного элемента списка
@@ -42,10 +43,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.name?.text = currentItem.name
 
         holder.eachItem?.setOnClickListener {
-            //val action = ListFragmentDirections.actionListFragmentToShowFragment(currentItem)
-            //пока что отключила
-            //val action = ListFragmentDirections.actionListFragmentToStartFragment(position)
-            //holder.itemView.findNavController().navigate(action)
+            val intent = Intent(holder.itemView.context, ViewPager::class.java)
+            intent.putExtra(NUMBER, position);
+            holder.itemView.context.startActivity(intent)
         }
 
     }

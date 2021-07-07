@@ -25,12 +25,8 @@ class AddViewModel(application: Application): AndroidViewModel(application) {
         repository = NoteRepository(noteDao)
     }
 
-    //fun setText(string: String){
-    //    text.value = string
-    //}
-
     fun addNote(): Boolean {
-        if (inputCheck(name.value, text.value)){
+        if (inputCheck()){
             val note = Note(0, name.value.toString(), text.value.toString(), Date())
             viewModelScope.launch(Dispatchers.IO) {
                 repository.addNote(note)
@@ -40,7 +36,7 @@ class AddViewModel(application: Application): AndroidViewModel(application) {
         return false
     }
 
-    private fun inputCheck(name: String?, text: String?): Boolean{
-        return !(TextUtils.isEmpty(name) || TextUtils.isEmpty(text))
+    private fun inputCheck(): Boolean{
+        return !(TextUtils.isEmpty(name.value) || TextUtils.isEmpty(text.value))
     }
 }

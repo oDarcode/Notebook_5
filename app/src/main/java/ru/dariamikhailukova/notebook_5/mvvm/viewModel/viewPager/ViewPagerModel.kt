@@ -1,4 +1,4 @@
-package ru.dariamikhailukova.notebook_5.mvvm.viewModel.list
+package ru.dariamikhailukova.notebook_5.mvvm.viewModel.viewPager
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -10,7 +10,7 @@ import ru.dariamikhailukova.notebook_5.data.Note
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
 
-class ListViewModel(application: Application): AndroidViewModel(application) {
+class ViewPagerModel(application: Application): AndroidViewModel(application) {
     val readAllData: LiveData<List<Note>>
     private val repository: NoteRepository
 
@@ -18,12 +18,6 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         val noteDao = NoteDatabase.getDatabase(application).noteDao()
         repository = NoteRepository(noteDao)
         readAllData = repository.readAllData
-    }
-
-    fun deleteAllNotes() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllNotes()
-        }
     }
 
 }

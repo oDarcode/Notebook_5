@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="ru.dariamikhailukova.notebook_5.mvvm.view.list.ListFragment"
-        android:label="ListFragment" >
+        android:label="My notebook">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment" />
@@ -16,8 +16,8 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="ru.dariamikhailukova.notebook_5.mvvm.view.add.AddFragment"
-        android:label="fragment_add"
-        tools:layout="@layout/fragment_add" >
+        android:label="Add"
+        tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />

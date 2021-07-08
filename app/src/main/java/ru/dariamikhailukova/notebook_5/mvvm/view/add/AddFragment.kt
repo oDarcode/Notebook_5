@@ -15,10 +15,11 @@ import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
 import ru.dariamikhailukova.notebook_5.databinding.FragmentAddBinding
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
+import ru.dariamikhailukova.notebook_5.mvvm.viewModel.current.CurrentViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 import java.util.*
 
-//
+
 class AddFragment : Fragment(){
     private lateinit var binding: FragmentAddBinding
     private lateinit var mAddViewModel: AddViewModel

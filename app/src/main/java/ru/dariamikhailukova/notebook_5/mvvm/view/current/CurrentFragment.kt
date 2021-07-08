@@ -58,15 +58,15 @@ class CurrentFragment : Fragment(), CurrentView {
 
     override fun deleteNote() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes"){_,_->
+        builder.setPositiveButton(getString(R.string.yes)){ _, _->
             mCurrentViewModel.deleteNote()
             activity?.onBackPressed()
             Toast.makeText(requireContext(), R.string.remove, Toast.LENGTH_SHORT).show()
         }
 
-        builder.setNegativeButton("No"){_,_->}
-        builder.setTitle("Delete?")
-        builder.setMessage("Are you sure?")
+        builder.setNegativeButton(getString(R.string.no)){ _, _->}
+        builder.setTitle(getString(R.string.do_delete))
+        builder.setMessage(getString(R.string.are_you_sure))
         builder.create().show()
     }
 

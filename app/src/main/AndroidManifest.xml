@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Notebook_5">
         <activity
             android:name=".mvvm.view.viewPager.ViewPager"
-            android:label="Notes" />
+            android:label="@string/notes" />
         <activity
             android:name=".MainActivity">
 

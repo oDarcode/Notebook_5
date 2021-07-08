@@ -28,8 +28,6 @@
             app:titleTextColor="@color/white" />
 
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView

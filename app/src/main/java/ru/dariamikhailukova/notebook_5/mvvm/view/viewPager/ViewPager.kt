@@ -28,8 +28,11 @@ class ViewPager : AppCompatActivity() {
         binding = ActivityViewPagerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val position = intent.getIntExtra(NUMBER, 0)
+        initView()
 
+    }
+
+    private fun initView(){
         adapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
         mViewPagerModel = ViewModelProvider(this).get(ViewPagerModel::class.java)
@@ -43,7 +46,7 @@ class ViewPager : AppCompatActivity() {
         })
 
         Handler(Looper.getMainLooper()).postDelayed({
-            binding.viewPager.setCurrentItem(position, false)
+            binding.viewPager.setCurrentItem(intent.getIntExtra(NUMBER, 0), false)
         }, 10)
     }
 

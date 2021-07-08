@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 import ru.dariamikhailukova.notebook_5.data.Note
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddViewModel(application: Application): AndroidViewModel(application) {
@@ -20,10 +22,11 @@ class AddViewModel(application: Application): AndroidViewModel(application) {
     var name = MutableLiveData<String>()
     var text = MutableLiveData<String>()
 
-    init {
+    init{
         val noteDao = NoteDatabase.getDatabase(application).noteDao()
         repository = NoteRepository(noteDao)
     }
+
 
     fun addNote(): Boolean {
         if (inputCheck()){

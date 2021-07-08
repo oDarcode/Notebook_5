@@ -57,14 +57,14 @@ class ListFragment : Fragment() {
     //удаление всех элеметов бд
     private fun deleteAllNotes() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes"){_,_->
+        builder.setPositiveButton(R.string.yes){_,_->
             mListViewModel.deleteAllNotes()
             Toast.makeText(requireContext(), R.string.remove_all, Toast.LENGTH_SHORT).show()
         }
 
-        builder.setNegativeButton("No"){_,_->}
-        builder.setTitle("Delete everything?")
-        builder.setMessage("Are you sure?")
+        builder.setNegativeButton(R.string.no){_,_->}
+        builder.setTitle(getString(R.string.delete_everything))
+        builder.setMessage(R.string.are_you_sure)
         builder.create().show()
     }
 }

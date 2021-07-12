@@ -1,5 +1,6 @@
 package ru.dariamikhailukova.notebook_5.mvvm.view.add
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
+import ru.dariamikhailukova.notebook_5.data.NoteDatabase
+import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.FragmentAddBinding
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.current.CurrentViewModel
@@ -29,13 +32,29 @@ class AddFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddBinding.inflate(inflater, container, false)
-        mAddViewModel = ViewModelProvider(this).get(AddViewModel::class.java)
+        val noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
+        mAddViewModel = AddViewModel(NoteRepository(noteDao))
+
         setHasOptionsMenu(true)
 
         binding.addViewModel = mAddViewModel
         binding.lifecycleOwner = this
 
+        subscribeToViewModel()
+
         return binding.root
+    }
+
+
+    private fun subscribeToViewModel(){
+        mAddViewModel.onAttemptSaveEmptyNote.observe(this){
+            Toast.makeText(requireContext(), R.string.fill_all, Toast.LENGTH_SHORT).show()
+        }
+
+        mAddViewModel.onSaveSuccess.observe(this){
+            Toast.makeText(requireContext(), R.string.successfully, Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_addFragment_to_listFragment)
+        }
     }
 
     //Создание меню
@@ -46,13 +65,7 @@ class AddFragment : Fragment(){
     //выбор элемента меню
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.menu_save){
-            if (mAddViewModel.addNote()){
-                Toast.makeText(requireContext(), R.string.successfully, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_addFragment_to_listFragment)
-            }else{
-                Toast.makeText(requireContext(), R.string.fill_all, Toast.LENGTH_SHORT).show()
-            }
-
+            mAddViewModel.addNote()
         }
         return super.onOptionsItemSelected(item)
     }

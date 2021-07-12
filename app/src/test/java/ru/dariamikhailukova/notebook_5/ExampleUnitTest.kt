@@ -24,12 +24,14 @@ import java.util.*
  */
 
 class ExampleUnitTest {
-
+    private lateinit var repository: NoteRepository
+    private lateinit var viewModel: AddViewModel
 
     @Before
     fun init(){
         MockitoAnnotations.initMocks(this)
-
+        repository = mock(NoteRepository::class.java)
+        viewModel = AddViewModel(repository)
     }
 
     @Test
@@ -40,8 +42,10 @@ class ExampleUnitTest {
 
     @Test
     fun saveNote(){
+        //viewModel.name = "fff"
+        //viewModel.text = "df"
 
-
+        viewModel.addNote()
 
         assertEquals(0, 1-1)
 

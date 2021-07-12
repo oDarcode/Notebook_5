@@ -1,4 +1,4 @@
-package ru.dariamikhailukova.notebook_5.mvvm.viewModel.current
+package ru.dariamikhailukova.notebook_5.data
 
 import android.app.Application
 import android.text.TextUtils
@@ -7,14 +7,11 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.dariamikhailukova.notebook_5.SingleLiveEvent
-import ru.dariamikhailukova.notebook_5.data.Note
-import ru.dariamikhailukova.notebook_5.data.NoteDatabase
-import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
+class NoteViewModel(private var repository: NoteRepository): ViewModel() {
 
     var id = MutableLiveData<Long>()
     var name = MutableLiveData<String>()
@@ -35,14 +32,32 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
     //попытка сохранения пустой заметки
     val onAttemptSaveEmptyNote = SingleLiveEvent<Unit>()
 
+    //успешное сохранение заметки
+    val onSaveSuccess = SingleLiveEvent<Unit>()
+
     //успешное удаление заметки
     val onDeleteSuccess = SingleLiveEvent<Unit>()
+
+    //успешное удаление заметок
+    val onAllDeleteSuccess = SingleLiveEvent<Unit>()
 
     //успешное обновление заметки
     val onUpdateSuccess = SingleLiveEvent<Unit>()
 
-    //успешная отправки заметки
-    val onSendSuccess = SingleLiveEvent<Unit>()
+    val readAllData: LiveData<List<Note>> = repository.readAllData
+
+    fun addNote(){
+        if (inputCheck()){
+            val note = Note(0, name.value.toString(), text.value.toString(), Date())
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.addNote(note)
+            }
+            onSaveSuccess.call()
+        }else{
+            Log.d("TAG", "Не удалось сохранить заметку")
+            onAttemptSaveEmptyNote.call()
+        }
+    }
 
     fun updateNote(){
         if (inputCheck()){
@@ -66,14 +81,11 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
         onDeleteSuccess.call()
     }
 
-
-    fun sendNote(){
-        if (inputCheck()){
-            onSendSuccess.call()
-        }else{
-            Log.d("TAG", "Не удалось отправить заметку")
-            onAttemptSaveEmptyNote.call()
+    fun deleteAllNotes(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllNotes()
         }
+        onAllDeleteSuccess.call()
     }
 
     private fun inputCheck(): Boolean{

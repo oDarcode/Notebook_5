@@ -9,7 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.dariamikhailukova.notebook_5.R
+import ru.dariamikhailukova.notebook_5.data.NoteDatabase
+import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.FragmentListBinding
+import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 
 
@@ -22,7 +25,9 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
-        mListViewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+
+        val noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
+        mListViewModel = ListViewModel(NoteRepository(noteDao))
         setHasOptionsMenu(true)
 
         val adapter = ListAdapter()
@@ -36,8 +41,15 @@ class ListFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
+        subscribeToViewModel()
 
         return binding.root
+    }
+
+    private fun subscribeToViewModel(){
+        mListViewModel.onAllDeleteSuccess.observe(this){
+            Toast.makeText(requireContext(), R.string.remove_all, Toast.LENGTH_SHORT).show()
+        }
     }
 
     //Создание меню
@@ -59,7 +71,6 @@ class ListFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.yes){_,_->
             mListViewModel.deleteAllNotes()
-            Toast.makeText(requireContext(), R.string.remove_all, Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton(R.string.no){_,_->}

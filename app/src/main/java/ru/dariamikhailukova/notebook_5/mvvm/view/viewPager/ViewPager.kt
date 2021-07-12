@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import ru.dariamikhailukova.notebook_5.R
+import ru.dariamikhailukova.notebook_5.data.NoteDatabase
+import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.ActivityViewPagerBinding
 import ru.dariamikhailukova.notebook_5.mvvm.view.current.CurrentFragment
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
@@ -35,7 +37,10 @@ class ViewPager : AppCompatActivity() {
     private fun initView(){
         adapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
-        mViewPagerModel = ViewModelProvider(this).get(ViewPagerModel::class.java)
+
+
+        val noteDao = NoteDatabase.getDatabase(application).noteDao()
+        mViewPagerModel = ViewPagerModel(NoteRepository(noteDao))
 
         setSupportActionBar(findViewById(R.id.myToolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true);

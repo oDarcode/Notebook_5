@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
+import ru.dariamikhailukova.notebook_5.data.NoteDatabase
+import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.FragmentAddBinding
 import ru.dariamikhailukova.notebook_5.databinding.FragmentCurrentBinding
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
@@ -32,12 +34,44 @@ class CurrentFragment : Fragment(), CurrentView {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCurrentBinding.inflate(inflater, container, false)
-        mCurrentViewModel = ViewModelProvider(this).get(CurrentViewModel::class.java)
+
+        val noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
+        mCurrentViewModel = CurrentViewModel(NoteRepository(noteDao))
+
 
         binding.currentViewModel = mCurrentViewModel
         binding.lifecycleOwner = this
 
+        subscribeToViewModel()
+
         return binding.root
+    }
+
+    private fun subscribeToViewModel(){
+        mCurrentViewModel.onAttemptSaveEmptyNote.observe(this){
+            Toast.makeText(requireContext(), R.string.fill_all, Toast.LENGTH_SHORT).show()
+        }
+
+        mCurrentViewModel.onDeleteSuccess.observe(this){
+            activity?.onBackPressed()
+            Toast.makeText(requireContext(), R.string.remove, Toast.LENGTH_SHORT).show()
+        }
+
+        mCurrentViewModel.onUpdateSuccess.observe(this){
+            activity?.onBackPressed()
+            Toast.makeText(requireContext(), R.string.update, Toast.LENGTH_SHORT).show()
+        }
+
+        mCurrentViewModel.onSendSuccess.observe(this){
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_SUBJECT, mCurrentViewModel.name.value)
+                putExtra(Intent.EXTRA_TEXT, mCurrentViewModel.text.value)
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(sendIntent, ""))
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,20 +82,13 @@ class CurrentFragment : Fragment(), CurrentView {
     }
 
     override fun updateItem() {
-        if (mCurrentViewModel.updateNote()){
-            activity?.onBackPressed()
-            Toast.makeText(requireContext(), R.string.update, Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(requireContext(), R.string.fill_all, Toast.LENGTH_SHORT).show()
-        }
+        mCurrentViewModel.updateNote()
     }
 
     override fun deleteNote() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(getString(R.string.yes)){ _, _->
             mCurrentViewModel.deleteNote()
-            activity?.onBackPressed()
-            Toast.makeText(requireContext(), R.string.remove, Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton(getString(R.string.no)){ _, _->}
@@ -71,17 +98,7 @@ class CurrentFragment : Fragment(), CurrentView {
     }
 
     override fun sendEmail() {
-        if (mCurrentViewModel.inputCheck()){
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_SUBJECT, mCurrentViewModel.name.value)
-                putExtra(Intent.EXTRA_TEXT, mCurrentViewModel.text.value)
-                type = "text/plain"
-            }
-            startActivity(Intent.createChooser(sendIntent, ""))
-        }else{
-            Toast.makeText(requireContext(), R.string.fill_all, Toast.LENGTH_SHORT).show()
-        }
+        mCurrentViewModel.sendNote()
     }
 
 }

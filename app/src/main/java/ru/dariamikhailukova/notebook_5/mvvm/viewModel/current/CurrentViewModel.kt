@@ -77,7 +77,8 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
     }
 
     private fun inputCheck(): Boolean{
-        return !(TextUtils.isEmpty(name.value) || TextUtils.isEmpty(text.value))
+        return !(name.value.isNullOrBlank() || text.value.isNullOrBlank())
+        //return !(TextUtils.isEmpty(name.value) || TextUtils.isEmpty(text.value))
     }
 
     private fun getDate(): String {

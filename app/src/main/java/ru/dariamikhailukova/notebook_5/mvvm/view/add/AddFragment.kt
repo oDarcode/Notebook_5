@@ -34,12 +34,10 @@ class AddFragment : Fragment(){
         binding = FragmentAddBinding.inflate(inflater, container, false)
         val noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
         mAddViewModel = AddViewModel(NoteRepository(noteDao))
-
         setHasOptionsMenu(true)
 
         binding.addViewModel = mAddViewModel
         binding.lifecycleOwner = this
-
         subscribeToViewModel()
 
         return binding.root

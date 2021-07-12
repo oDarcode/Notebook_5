@@ -13,6 +13,21 @@ import java.util.*
 
 class NoteViewModel(private var repository: NoteRepository): ViewModel() {
 
+    lateinit var name: String
+    var id = MutableLiveData<Long>()
+    var date = Int
+
+    //успешное сохранение заметки
+    val onSaveSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
+
+    fun addNote(){
+        name = "something"
+
+        id.value = 45
+        onSaveSuccess.call()
+    }
+
+    /*
     var id = MutableLiveData<Long>()
     var name = MutableLiveData<String>()
     var text = MutableLiveData<String>()
@@ -97,5 +112,5 @@ class NoteViewModel(private var repository: NoteRepository): ViewModel() {
         val timeFormat: DateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         return  (timeFormat.format(date.value) + "  " + dateFormat.format(date.value)).toString()
     }
-
+*/
 }

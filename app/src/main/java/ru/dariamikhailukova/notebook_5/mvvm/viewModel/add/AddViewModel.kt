@@ -20,14 +20,11 @@ class AddViewModel(private val repository: NoteRepository): ViewModel() {
     var name = MutableLiveData<String>()
     var text = MutableLiveData<String>()
 
-    //var name = String
-    //var text = String
-
     //попытка сохранения пустой заметки
-    val onAttemptSaveEmptyNote = SingleLiveEvent<Unit>()
+    var onAttemptSaveEmptyNote: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     //успешное сохранение заметки
-    val onSaveSuccess = SingleLiveEvent<Unit>()
+    val onSaveSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     fun addNote(){
         if (inputCheck()){
@@ -42,8 +39,15 @@ class AddViewModel(private val repository: NoteRepository): ViewModel() {
         }
     }
 
-    private fun inputCheck(): Boolean{
-        return !(TextUtils.isEmpty(name.value) || TextUtils.isEmpty(text.value))
+    fun inputCheck(): Boolean{
+        return !(name.value.isNullOrBlank() || text.value.isNullOrBlank())
+
+        /*val one =
+            //TextUtils.isEmpty(name.value)
+        val two =
+            //TextUtils.isEmpty(text.value)
+        val three = one || two
+        return !(three)*/
     }
 
 }

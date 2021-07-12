@@ -1,10 +1,10 @@
-package ru.dariamikhailukova.notebook_5.mvvm.viewModel.add
+ package ru.dariamikhailukova.notebook_5.mvvm.viewModel.add
 
 import android.app.Application
 import android.text.TextUtils
 import androidx.databinding.Bindable
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +26,6 @@ class AddViewModel(application: Application): AndroidViewModel(application) {
         val noteDao = NoteDatabase.getDatabase(application).noteDao()
         repository = NoteRepository(noteDao)
     }
-
 
     fun addNote(): Boolean {
         if (inputCheck()){

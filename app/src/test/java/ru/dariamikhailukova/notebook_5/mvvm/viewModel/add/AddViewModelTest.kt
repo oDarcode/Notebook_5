@@ -37,7 +37,7 @@ class AddViewModelTest {
 
     //правильно ли работает проверка для пустой строки и строки по умолчанию
     @Test
-    fun isCorrect() {
+    fun isCorrectCheck() {
         viewModel.name.value = ""
 
         Assert.assertEquals(false, viewModel.inputCheck())
@@ -84,7 +84,7 @@ class AddViewModelTest {
 
     //заметка, текст которой одни пробелы не сохраняется
     @Test
-    fun addManySpaces(){
+    fun addNoteWithManySpaces(){
         viewModel.name.value = "first"
         viewModel.text.value = "        "
 
@@ -97,6 +97,5 @@ class AddViewModelTest {
 
         Assert.assertEquals(true, savedError)
     }
-
 
 }

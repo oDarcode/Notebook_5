@@ -41,13 +41,6 @@ class AddViewModel(private val repository: NoteRepository): ViewModel() {
 
     fun inputCheck(): Boolean{
         return !(name.value.isNullOrBlank() || text.value.isNullOrBlank())
-
-        /*val one =
-            //TextUtils.isEmpty(name.value)
-        val two =
-            //TextUtils.isEmpty(text.value)
-        val three = one || two
-        return !(three)*/
     }
 
 }

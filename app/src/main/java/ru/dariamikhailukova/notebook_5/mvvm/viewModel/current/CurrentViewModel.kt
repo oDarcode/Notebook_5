@@ -66,7 +66,6 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
         onDeleteSuccess.call()
     }
 
-
     fun sendNote(){
         if (inputCheck()){
             onSendSuccess.call()

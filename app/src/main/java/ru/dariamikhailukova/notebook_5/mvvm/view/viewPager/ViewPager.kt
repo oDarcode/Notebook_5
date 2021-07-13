@@ -1,21 +1,18 @@
 package ru.dariamikhailukova.notebook_5.mvvm.view.viewPager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.ActivityViewPagerBinding
 import ru.dariamikhailukova.notebook_5.mvvm.view.current.CurrentFragment
-import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.viewPager.ViewPagerModel
 
 const val NUMBER = "Current item"
@@ -39,6 +36,7 @@ class ViewPager : AppCompatActivity() {
         binding.viewPager.adapter = adapter
 
 
+
         val noteDao = NoteDatabase.getDatabase(application).noteDao()
         mViewPagerModel = ViewPagerModel(NoteRepository(noteDao))
 
@@ -46,9 +44,18 @@ class ViewPager : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
 
+
         mViewPagerModel.readAllData.observe(this, { note ->
             adapter.setData(note)
         })
+        //binding.viewPager.adapter?.notifyDataSetChanged();
+        setCurrentItem()
+
+    }
+
+    private fun setCurrentItem(){
+
+        //Handler(Looper.getMainLooper()).post { binding.viewPager.setCurrentItem(intent.getIntExtra(NUMBER, 0), false) }
 
         Handler(Looper.getMainLooper()).postDelayed({
             binding.viewPager.setCurrentItem(intent.getIntExtra(NUMBER, 0), false)

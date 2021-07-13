@@ -43,7 +43,6 @@ class AddFragment : Fragment(){
         return binding.root
     }
 
-
     private fun subscribeToViewModel(){
         mAddViewModel.onAttemptSaveEmptyNote.observe(this){
             Toast.makeText(requireContext(), R.string.fill_all, Toast.LENGTH_SHORT).show()
@@ -64,6 +63,10 @@ class AddFragment : Fragment(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.menu_save){
             mAddViewModel.addNote()
+        }
+
+        if(item.itemId == R.id.menu_download){
+            TODO()
         }
         return super.onOptionsItemSelected(item)
     }

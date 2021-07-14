@@ -4,13 +4,11 @@
     <item android:id="@+id/menu_download"
         android:title="@string/download"
         android:icon="@drawable/ic_baseline_cloud_download_24"
-        android:iconTint="@android:color/white"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/menu_save"
     android:title="@string/save"
     android:icon="@drawable/ic_baseline_save_24"
-    android:iconTint="@android:color/white"
     app:showAsAction="ifRoom"/>
 
 

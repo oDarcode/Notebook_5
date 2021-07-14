@@ -8,14 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
-    <color name="orange">#FFA840</color>
-    <color name="light_orange">#FFA055</color>
-    <color name="grey">#E6E5E4</color>
-    <color name="main">#FFEAD1</color>
-    <color name="whity">#FFFFFE</color>
-    <color name="ocean">#2AE5DE</color>
-    <color name="dark_ocean">#75726E</color>
-
     <color name="dark">#2D2823</color>
+
+    <color name="primary">#ffa726</color>
+    <color name="primary_dark">#c77800</color>
+    <color name="primary_light">#ffd95b</color>
+    <color name="main_light">#fff3e0</color>
 </resources>

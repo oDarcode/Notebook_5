@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -12,16 +13,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.awaitResponse
+import retrofit2.converter.gson.GsonConverterFactory
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.FragmentAddBinding
+import ru.dariamikhailukova.notebook_5.http.ApiRequests
+import ru.dariamikhailukova.notebook_5.http.CatJson
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.current.CurrentViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 import java.util.*
 
+const val BASE_URL = "https://cat-fact.herokuapp.com"
 
 class AddFragment : Fragment(){
     private lateinit var binding: FragmentAddBinding
@@ -66,9 +77,30 @@ class AddFragment : Fragment(){
         }
 
         if(item.itemId == R.id.menu_download){
-            TODO()
+            getCurrentData()
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getCurrentData(){
+        val api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiRequests::class.java)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = api.getCatFacts().awaitResponse()
+            if (response.isSuccessful){
+                val data: CatJson = response.body()!!
+                Log.d("Tag", data.text)
+
+                withContext(Dispatchers.Main){
+                    binding.addViewModel?.name?.value = "Note from internet " + data._id
+                    binding.addViewModel?.text?.value = data.text
+                }
+            }
+        }
+
+    }
 }

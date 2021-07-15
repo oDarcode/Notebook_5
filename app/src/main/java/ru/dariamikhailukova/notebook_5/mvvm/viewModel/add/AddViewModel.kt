@@ -28,13 +28,17 @@ class AddViewModel(private val repository: NoteRepository): ViewModel() {
             }
             onSaveSuccess.call()
         }else{
-            Log.d("TAG", "Не удалось сохранить заметку")
+            Log.d(TAG, "Не удалось сохранить заметку")
             onAttemptSaveEmptyNote.call()
         }
     }
 
     fun inputCheck(): Boolean{
         return !(name.value.isNullOrBlank() || text.value.isNullOrBlank())
+    }
+
+    companion object{
+        const val TAG = "AddViewModel"
     }
 
 }

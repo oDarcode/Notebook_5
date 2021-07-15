@@ -33,8 +33,6 @@ class ViewPager : AppCompatActivity() {
         adapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
 
-
-
         val noteDao = NoteDatabase.getDatabase(application).noteDao()
         mViewPagerModel = ViewPagerModel(NoteRepository(noteDao))
 

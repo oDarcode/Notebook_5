@@ -30,7 +30,6 @@ class CurrentFragment : Fragment(), CurrentView {
         val noteDao = NoteDatabase.getDatabase(requireContext()).noteDao()
         mCurrentViewModel = CurrentViewModel(NoteRepository(noteDao))
 
-
         binding.currentViewModel = mCurrentViewModel
         binding.lifecycleOwner = this
 

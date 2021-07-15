@@ -38,9 +38,6 @@ class AddFragment : Fragment(){
         val viewModelFactory = PostViewModelFactory(repository)
         mPostViewModel = ViewModelProvider(this, viewModelFactory).get(PostViewModel::class.java)
 
-
-
-
         return binding.root
     }
 
@@ -72,21 +69,22 @@ class AddFragment : Fragment(){
         return super.onOptionsItemSelected(item)
     }
 
+    // Получение заметки из сети
     private fun getCurrentData(){
         mPostViewModel.getPost()
         mPostViewModel.myResponse.observe(this, { response ->
             if(response.isSuccessful){
-                Log.d("Response", response.body()?.id.toString())
-                //Log.d("Response", response.body()?.title!!)
+                Log.d(TAG, "Response id " + response.body()?.id.toString())
                 mAddViewModel.name.value = response.body()?.title!!
                 mAddViewModel.text.value = response.body()?.body!!
             }else{
-                Log.d("Tag", "Error")
+                Log.d(TAG, "Error")
             }
         })
     }
 
     companion object{
+        const val TAG = "AddFragment"
         const val BASE_URL = "https://jsonplaceholder.typicode.com/"
     }
 }

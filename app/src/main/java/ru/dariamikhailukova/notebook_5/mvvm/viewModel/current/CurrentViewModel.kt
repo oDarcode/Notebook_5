@@ -18,14 +18,14 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
     var text = MutableLiveData<String>()
     var date = MutableLiveData<Date>()
 
-    var date_str = MutableLiveData<String>()
+    var dateStr = MutableLiveData<String>()
 
     fun initAll(note: Note){
         id.value = note.id
         name.value = note.name
         text.value = note.text
         date.value = note.date
-        date_str.value = getDate()
+        dateStr.value = getDate()
 
     }
 
@@ -49,7 +49,7 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
             }
             onUpdateSuccess.call()
         }else{
-            Log.d("TAG", "Не удалось обновить заметку")
+            Log.d(TAG, "Не удалось обновить заметку")
             onAttemptSaveEmptyNote.call()
         }
     }
@@ -67,7 +67,7 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
         if (inputCheck()){
             onSendSuccess.call()
         }else{
-            Log.d("TAG", "Не удалось отправить заметку")
+            Log.d(TAG, "Не удалось отправить заметку")
             onAttemptSaveEmptyNote.call()
         }
     }
@@ -81,6 +81,10 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
         val dateFormat: DateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val timeFormat: DateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         return  (timeFormat.format(date.value!!) + "  " + dateFormat.format(date.value!!))
+    }
+
+    companion object{
+        const val TAG = "CurrentViewModel"
     }
 
 }

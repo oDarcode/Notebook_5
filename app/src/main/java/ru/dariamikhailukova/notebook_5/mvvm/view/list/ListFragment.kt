@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.FragmentListBinding
-import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 
 

@@ -15,8 +15,6 @@ import ru.dariamikhailukova.notebook_5.databinding.ActivityViewPagerBinding
 import ru.dariamikhailukova.notebook_5.mvvm.view.current.CurrentFragment
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.viewPager.ViewPagerModel
 
-const val NUMBER = "Current item"
-
 class ViewPager : AppCompatActivity() {
     private lateinit var binding: ActivityViewPagerBinding
     private lateinit var mViewPagerModel: ViewPagerModel
@@ -41,8 +39,8 @@ class ViewPager : AppCompatActivity() {
         mViewPagerModel = ViewPagerModel(NoteRepository(noteDao))
 
         setSupportActionBar(findViewById(R.id.myToolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        supportActionBar?.setDisplayShowHomeEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
         mViewPagerModel.readAllData.observe(this, { note ->
@@ -64,8 +62,8 @@ class ViewPager : AppCompatActivity() {
 
     //Создание меню
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.view_pager_menu, menu);
-        return true;
+        menuInflater.inflate(R.menu.view_pager_menu, menu)
+        return true
     }
 
     private fun ViewPager2.findCurrentFragment(fragmentManager: FragmentManager): Fragment? {
@@ -92,5 +90,9 @@ class ViewPager : AppCompatActivity() {
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object{
+        const val NUMBER = "Current item"
     }
 }

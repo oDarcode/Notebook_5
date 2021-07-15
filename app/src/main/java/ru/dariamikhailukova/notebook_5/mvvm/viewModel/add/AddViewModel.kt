@@ -1,18 +1,12 @@
  package ru.dariamikhailukova.notebook_5.mvvm.viewModel.add
 
-import android.app.Application
-import android.text.TextUtils
 import android.util.Log
-import androidx.databinding.Bindable
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.dariamikhailukova.notebook_5.SingleLiveEvent
 import ru.dariamikhailukova.notebook_5.data.Note
-import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddViewModel(private val repository: NoteRepository): ViewModel() {

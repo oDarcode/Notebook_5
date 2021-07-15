@@ -8,21 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
-import ru.dariamikhailukova.notebook_5.databinding.FragmentAddBinding
 import ru.dariamikhailukova.notebook_5.databinding.FragmentCurrentBinding
-import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.current.CurrentViewModel
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
-const val NOTE = "Note"
 class CurrentFragment : Fragment(), CurrentView {
     private lateinit var binding: FragmentCurrentBinding
     private lateinit var mCurrentViewModel: CurrentViewModel
@@ -101,4 +93,8 @@ class CurrentFragment : Fragment(), CurrentView {
         mCurrentViewModel.sendNote()
     }
 
+
+    companion object{
+        const val NOTE = "Note"
+    }
 }

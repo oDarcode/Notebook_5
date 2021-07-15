@@ -1,45 +1,22 @@
 package ru.dariamikhailukova.notebook_5.mvvm.view.add
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.awaitResponse
-import retrofit2.converter.gson.GsonConverterFactory
 import ru.dariamikhailukova.notebook_5.R
-import ru.dariamikhailukova.notebook_5.data.Note
 import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import ru.dariamikhailukova.notebook_5.databinding.FragmentAddBinding
-import ru.dariamikhailukova.notebook_5.http.ApiRequests
-import ru.dariamikhailukova.notebook_5.http.CatJson
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
-import ru.dariamikhailukova.notebook_5.mvvm.viewModel.current.CurrentViewModel
-import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
 import ru.dariamikhailukova.notebook_5.retrofit.PostRepository
 import ru.dariamikhailukova.notebook_5.retrofit.PostViewModel
 import ru.dariamikhailukova.notebook_5.retrofit.PostViewModelFactory
-import java.util.*
 
 class AddFragment : Fragment(){
-
-    companion object{
-        const val BASE_URL = "https://jsonplaceholder.typicode.com/"
-    }
     private lateinit var binding: FragmentAddBinding
     private lateinit var mAddViewModel: AddViewModel
     private lateinit var mPostViewModel: PostViewModel
@@ -107,5 +84,9 @@ class AddFragment : Fragment(){
                 Log.d("Tag", "Error")
             }
         })
+    }
+
+    companion object{
+        const val BASE_URL = "https://jsonplaceholder.typicode.com/"
     }
 }

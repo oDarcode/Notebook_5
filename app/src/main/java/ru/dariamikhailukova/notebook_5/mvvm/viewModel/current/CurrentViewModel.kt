@@ -1,14 +1,11 @@
 package ru.dariamikhailukova.notebook_5.mvvm.viewModel.current
 
-import android.app.Application
-import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.dariamikhailukova.notebook_5.SingleLiveEvent
 import ru.dariamikhailukova.notebook_5.data.Note
-import ru.dariamikhailukova.notebook_5.data.NoteDatabase
 import ru.dariamikhailukova.notebook_5.data.NoteRepository
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -83,7 +80,7 @@ class CurrentViewModel(private val repository: NoteRepository): ViewModel() {
     private fun getDate(): String {
         val dateFormat: DateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         val timeFormat: DateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        return  (timeFormat.format(date.value) + "  " + dateFormat.format(date.value)).toString()
+        return  (timeFormat.format(date.value!!) + "  " + dateFormat.format(date.value!!))
     }
 
 }

@@ -9,8 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ru.dariamikhailukova.notebook_5.R
 import ru.dariamikhailukova.notebook_5.data.Note
-import ru.dariamikhailukova.notebook_5.mvvm.view.viewPager.NUMBER
 import ru.dariamikhailukova.notebook_5.mvvm.view.viewPager.ViewPager
+import ru.dariamikhailukova.notebook_5.mvvm.view.viewPager.ViewPager.Companion.NUMBER
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var noteList = emptyList<Note>()
@@ -44,7 +44,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         holder.eachItem?.setOnClickListener {
             val intent = Intent(holder.itemView.context, ViewPager::class.java)
-            intent.putExtra(NUMBER, position);
+            intent.putExtra(NUMBER, position)
             holder.itemView.context.startActivity(intent)
         }
 

@@ -14,16 +14,12 @@
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/main_light</item>
 
-        <item name="colorOnBackground">@color/white</item>
-
     </style>
 
 
     <style name="ToolbarThemeWhite" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
-
-
     </style>
 
     <style name = "textStyle" parent = "Theme.MaterialComponents.DayNight.NoActionBar" >
@@ -33,7 +29,6 @@
         <item name="android:textSize">18sp</item>
 
         <item name="android:background">@color/white</item>
-
     </style>
 
     <style name="dateStyle" parent = "Theme.MaterialComponents.DayNight.NoActionBar" >

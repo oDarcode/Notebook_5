@@ -30,13 +30,19 @@ import ru.dariamikhailukova.notebook_5.http.CatJson
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.add.AddViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.current.CurrentViewModel
 import ru.dariamikhailukova.notebook_5.mvvm.viewModel.list.ListViewModel
+import ru.dariamikhailukova.notebook_5.retrofit.PostRepository
+import ru.dariamikhailukova.notebook_5.retrofit.PostViewModel
+import ru.dariamikhailukova.notebook_5.retrofit.PostViewModelFactory
 import java.util.*
 
-const val BASE_URL = "https://cat-fact.herokuapp.com"
-
 class AddFragment : Fragment(){
+
+    companion object{
+        const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+    }
     private lateinit var binding: FragmentAddBinding
     private lateinit var mAddViewModel: AddViewModel
+    private lateinit var mPostViewModel: PostViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +56,13 @@ class AddFragment : Fragment(){
         binding.addViewModel = mAddViewModel
         binding.lifecycleOwner = this
         subscribeToViewModel()
+
+        val repository = PostRepository()
+        val viewModelFactory = PostViewModelFactory(repository)
+        mPostViewModel = ViewModelProvider(this, viewModelFactory).get(PostViewModel::class.java)
+
+
+
 
         return binding.root
     }
@@ -83,24 +96,16 @@ class AddFragment : Fragment(){
     }
 
     private fun getCurrentData(){
-        val api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiRequests::class.java)
-
-        GlobalScope.launch(Dispatchers.IO) {
-            val response = api.getCatFacts().awaitResponse()
-            if (response.isSuccessful){
-                val data: CatJson = response.body()!!
-                Log.d("Tag", data.text)
-
-                withContext(Dispatchers.Main){
-                    binding.addViewModel?.name?.value = "Note from internet " + data._id
-                    binding.addViewModel?.text?.value = data.text
-                }
+        mPostViewModel.getPost()
+        mPostViewModel.myResponse.observe(this, { response ->
+            if(response.isSuccessful){
+                Log.d("Response", response.body()?.id.toString())
+                //Log.d("Response", response.body()?.title!!)
+                mAddViewModel.name.value = response.body()?.title!!
+                mAddViewModel.text.value = response.body()?.body!!
+            }else{
+                Log.d("Tag", "Error")
             }
-        }
-
+        })
     }
 }

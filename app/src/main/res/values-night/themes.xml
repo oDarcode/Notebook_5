@@ -16,12 +16,6 @@
 
     </style>
 
-    <style name="ToolbarThemeWhite" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/light</item>
-        <item name="android:textColorPrimary">@color/light</item>
-
-    </style>
-
     <style name = "textStyle" parent = "Theme.MaterialComponents.DayNight.NoActionBar" >
         <item name="android:textColor">@color/light</item>
         <item name="fontFamily">roboto_regular</item >
@@ -29,7 +23,6 @@
         <item name="android:textSize">18sp</item>
 
         <item name="android:background">@color/night_primary_light</item>
-
     </style>
 
     <style name="dateStyle" parent = "Theme.MaterialComponents.DayNight.NoActionBar" >
